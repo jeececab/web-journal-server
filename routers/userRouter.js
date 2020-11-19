@@ -44,7 +44,9 @@ async function loginUser(req, res) {
 
 async function me(req, res) {
   try {
-    if (!req.session.userId) throw new Error('User not authenticated');
+    if (!req.session.userId) {
+      return res.status(200).send({ error: 'User not authenticated' });
+    }
 
     const user = await User.findOne({ _id: req.session.userId });
 
