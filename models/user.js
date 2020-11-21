@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+const Post = require('./post');
 
 const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
+      unique: true,
       required: true,
       trim: true
     },
@@ -30,14 +32,23 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
-      minlength: 7,
-      trim: true,
-      match: /^((?!password).)*$/
+      required: true
     }
   },
   { timestamps: true }
 );
+
+userSchema.virtual('posts', {
+  ref: 'Post',
+  localField: '_id',
+  foreignField: 'owner'
+});
+
+userSchema.pre('remove', async function (next) {
+  const user = this;
+  await Post.deleteMany({ user_id: user._id });
+  next();
+});
 
 const User = mongoose.model('User', userSchema);
 

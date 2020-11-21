@@ -5,6 +5,7 @@ const session = require('express-session');
 const cors = require('cors');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const userRouter = require('./routers/userRouter');
+const postRouter = require('./routers/postRouter');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -45,6 +46,7 @@ app.use(
 app.use(express.json());
 
 app.use(userRouter);
+app.use(postRouter);
 
 app.listen(port, () => {
   console.log(`Server is up on http://localhost:${port}`);
