@@ -61,8 +61,8 @@ async function fetchUserPosts(req, res) {
         path: 'posts',
         match,
         options: {
-          limit: parseInt(req.query.limit),
-          skip: parseInt(req.query.skip),
+          limit: Number(req.query.limit),
+          skip: Number(req.query.skip) > 0 ? Number(req.query.skip) * Number(req.query.limit) : 0,
           sort
         }
       })

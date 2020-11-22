@@ -11,6 +11,9 @@ router.get('/users/logout', logoutUser);
 
 async function signupUser(req, res) {
   try {
+    const usersCount = await User.find().countDocuments();
+    if (usersCount > 5) return res.status(400).send({ error: 'Too many users, sorry' });
+
     if (req.body.password.length < 8) throw new Error('Password must be at least 7 characters');
 
     const user = new User(req.body);
