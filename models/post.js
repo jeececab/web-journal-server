@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const postSchema = new mongoose.Schema(
   {
-    _id: {
+    date_title: {
       type: String,
       require: true
     },
@@ -51,6 +51,10 @@ const postSchema = new mongoose.Schema(
       default: 0
     },
     meditation_time: {
+      type: Number,
+      default: 0
+    },
+    wpm_count: {
       type: Number,
       default: 0
     },

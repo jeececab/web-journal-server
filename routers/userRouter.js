@@ -39,7 +39,7 @@ async function loginUser(req, res) {
     if (!valid) throw new Error('Invalid credentials');
 
     req.session.userId = user.id;
-    res.status(200).send({ user });
+    res.send({ user });
   } catch (error) {
     res.status(401).send({ error: error.message });
   }
@@ -60,7 +60,7 @@ async function logoutUser(req, res) {
       res.status(400).send({ error: 'Failed to destroy session' });
     } else {
       res.clearCookie('mip');
-      res.status(200).send();
+      res.send();
     }
   });
 }

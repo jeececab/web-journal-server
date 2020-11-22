@@ -41,7 +41,7 @@ const userSchema = new mongoose.Schema(
 userSchema.virtual('posts', {
   ref: 'Post',
   localField: '_id',
-  foreignField: 'owner'
+  foreignField: 'user_id'
 });
 
 userSchema.pre('remove', async function (next) {

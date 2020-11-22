@@ -2,10 +2,12 @@ const express = require('express');
 const router = new express.Router();
 const auth = require('../middleware/auth');
 const Post = require('../models/post');
+const User = require('../models/user');
 
 router.post('/posts', auth, createPost);
-router.get('/posts/:id', auth, fetchPost);
-router.patch('/posts/:id', auth, updatePost);
+router.get('/posts/:date_title', auth, fetchPost);
+router.patch('/posts/:date_title', auth, updatePost);
+router.get('/posts', auth, fetchUserPosts);
 
 async function createPost(req, res) {
   const post = new Post({
@@ -23,9 +25,9 @@ async function createPost(req, res) {
 
 async function fetchPost(req, res) {
   try {
-    const post = await Post.findOne({ _id: req.params.id, user_id: req.userId });
+    const post = await Post.findOne({ date_title: req.params.date_title, user_id: req.userId });
     if (!post) return res.status(200).send({ error: 'Post not found' });
-    res.status(200).send({ post });
+    res.send({ post });
   } catch (e) {
     res.status(500).send();
   }
@@ -34,13 +36,47 @@ async function fetchPost(req, res) {
 async function updatePost(req, res) {
   const updates = Object.keys(req.body);
   try {
-    const post = await Post.findOne({ _id: req.params.id, user_id: req.userId });
+    const post = await Post.findOne({ date_title: req.params.date_title, user_id: req.userId });
 
     updates.forEach(update => (post[update] = req.body[update]));
     await post.save();
     res.status(201).send({ post });
   } catch (error) {
     res.status(400).send({ error });
+  }
+}
+
+async function fetchUserPosts(req, res) {
+  try {
+    const user = await User.findOne({ _id: req.userId });
+    if (!user) return res.status(404).send({ error: 'User not found' });
+
+    const match = {};
+    const sort = { _id: req.query.sort === 'desc' ? -1 : 1 };
+
+    const count = await Post.find({ user_id: req.userId }).countDocuments();
+
+    await user
+      .populate({
+        path: 'posts',
+        match,
+        options: {
+          limit: parseInt(req.query.limit),
+          skip: parseInt(req.query.skip),
+          sort
+        }
+      })
+      .execPopulate();
+    res.send({
+      posts: user.posts,
+      meta: {
+        documentsCount: count,
+        currentPage: Number(req.query.skip) + 1,
+        totalPages: Math.ceil(count / Number(req.query.limit))
+      }
+    });
+  } catch (error) {
+    res.status(500).send();
   }
 }
 
