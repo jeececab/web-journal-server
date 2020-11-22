@@ -41,6 +41,15 @@ const postSchema = new mongoose.Schema(
       type: Number,
       default: 0
     },
+    project_title: {
+      type: String,
+      maxlength: 200,
+      default: ''
+    },
+    project_time: {
+      type: Number,
+      default: 0
+    },
     meditation_time: {
       type: Number,
       default: 0
