@@ -18,8 +18,6 @@ store.on('error', error => {
   console.log(error);
 });
 
-app.set('trust proxy', 1);
-
 app.use(
   cors({
     origin: process.env.NODE_ENV === 'production' ? 'https://web-journal.netlify.app' : 'http://localhost:3000',
@@ -27,21 +25,25 @@ app.use(
   })
 );
 
-app.use(
-  session({
-    name: 'mip',
-    secret: process.env.SESSION_SECRET,
-    store,
-    resave: true,
-    saveUninitialized: false,
-    cookie: {
-      maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
-      httpOnly: true,
-      sameSite: 'strict',
-      secure: process.env.NODE_ENV === 'production'
-    }
-  })
-);
+const sessionConfig = {
+  name: 'mip',
+  secret: process.env.SESSION_SECRET,
+  store,
+  resave: true,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production'
+  }
+};
+
+if (process.env.ENV === 'production') {
+  app.set('trust proxy', 1);
+  sessionConfig.cookie.secure = true;
+}
+
+app.use(session(sessionConfig));
 
 app.use(express.json());
 
