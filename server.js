@@ -38,7 +38,7 @@ const sessionConfig = {
     httpOnly: true,
     sameSite: 'none',
     secure: process.env.ENV === 'production',
-    //domain: 'web-journal.netlify.app'
+    domain: 'shielded-hamlet-36885.herokuapp.com'
   }
 };
 
