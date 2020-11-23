@@ -22,7 +22,7 @@ app.set('trust proxy', 1);
 
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: process.env.ENV === 'production' ? 'https://web-journal.netlify.app' : 'http://localhost:3000',
     credentials: true
   })
 );
