@@ -22,8 +22,9 @@ store.on('error', error => {
 
 app.use(
   cors({
-    origin: ['https://web-journal.netlify.app', 'https://shielded-hamlet-36885.herokuapp.com'],
-    credentials: true
+    origin: "*",
+    credentials: true,
+    methods: "GET,POST,PATCH"
   })
 );
 
@@ -36,9 +37,9 @@ const sessionConfig = {
   cookie: {
     maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
     httpOnly: true,
-    sameSite: 'none',
-    secure: process.env.ENV === 'production'
-    //domain: ".web-journal.netlify.app"
+    sameSite: 'lax',
+    secure: process.env.ENV === 'production',
+    domain: "web-journal.netlify.app"
   }
 };
 
