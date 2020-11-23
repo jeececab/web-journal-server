@@ -22,7 +22,7 @@ store.on('error', error => {
 
 app.use(
   cors({
-    origin: '*',
+    origin: 'https://web-journal.netlify.app',
     credentials: true
   })
 );
@@ -36,9 +36,9 @@ const sessionConfig = {
   cookie: {
     maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
     httpOnly: true,
-    sameSite: 'none',
+    sameSite: 'lax',
     secure: process.env.ENV === 'production',
-    //domain: 'web-journal.netlify.app'
+    domain: 'web-journal.netlify.app'
   }
 };
 
