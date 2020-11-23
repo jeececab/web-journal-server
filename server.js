@@ -14,13 +14,15 @@ const store = new MongoDBStore({
   collection: 'sessions'
 });
 
+app.set('trust proxy', 1);
+
 store.on('error', error => {
   console.log(error);
 });
 
 app.use(
   cors({
-    origin: process.env.NODE_ENV === 'production' ? 'https://web-journal.netlify.app' : 'http://localhost:3000',
+    origin: process.env.ENV === 'production' ? 'https://web-journal.netlify.app' : 'http://localhost:3000',
     credentials: true
   })
 );
@@ -33,14 +35,12 @@ const sessionConfig = {
   saveUninitialized: false,
   cookie: {
     maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
-    httpOnly: true
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.ENV === 'production',
+    domain: ".web-journal.netlify.app"
   }
 };
-
-if (process.env.ENV === 'production') {
-  app.set('trust proxy', 1);
-  //sessionConfig.cookie.secure = true;
-}
 
 app.use(session(sessionConfig));
 
