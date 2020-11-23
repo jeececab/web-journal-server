@@ -39,7 +39,7 @@ const sessionConfig = {
     httpOnly: true,
     sameSite: 'lax',
     secure: process.env.NODE_ENV === 'production',
-    domain: process.env.NODE_ENV === 'production' ? '.journal.jeececab.app' : undefined
+    domain: process.env.NODE_ENV === 'production' ? '.jeececab.app' : undefined
   }
 };
 
