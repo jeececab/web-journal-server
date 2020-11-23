@@ -34,11 +34,12 @@ const sessionConfig = {
   resave: true,
   saveUninitialized: false,
   cookie: {
+    path: '/',
     maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
     httpOnly: true,
-    sameSite: 'none',
+    sameSite: 'lax',
     secure: true,
-    domain: 'shielded-hamlet-36885.herokuapp.com'
+    //domain: 'shielded-hamlet-36885.herokuapp.com'
   }
 };
 
