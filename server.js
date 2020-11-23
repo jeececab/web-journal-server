@@ -22,9 +22,8 @@ store.on('error', error => {
 
 app.use(
   cors({
-    origin: "*",
-    credentials: true,
-    methods: "GET,POST,PATCH"
+    origin: '*',
+    credentials: true
   })
 );
 
@@ -39,7 +38,7 @@ const sessionConfig = {
     httpOnly: true,
     sameSite: 'none',
     secure: process.env.ENV === 'production',
-    domain: "web-journal.netlify.app"
+    //domain: 'web-journal.netlify.app'
   }
 };
 
