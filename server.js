@@ -35,10 +35,10 @@ const sessionConfig = {
   saveUninitialized: false,
   cookie: {
     maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
-    //httpOnly: true,
-    //sameSite: 'none',
-    //secure: process.env.ENV === 'production',
-    //domain: '.shielded-hamlet-36885.herokuapp.com'
+    httpOnly: true,
+    sameSite: 'lax',
+    secure: process.env.ENV === 'production',
+    domain: '.shielded-hamlet-36885.herokuapp.com'
   }
 };
 
