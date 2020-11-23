@@ -22,7 +22,7 @@ store.on('error', error => {
 
 app.use(
   cors({
-    origin: 'https://journal.jeececab.com',
+    origin: process.env.NODE_ENV === 'production' ? 'https://journal.jeececab.com' : 'http://localhost:3000',
     credentials: true
   })
 );
@@ -37,9 +37,8 @@ const sessionConfig = {
     path: '/',
     maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
     httpOnly: true,
-    sameSite: 'none',
-    secure: true,// process.env.NODE_ENV === 'production',
-    //domain: process.env.NODE_ENV === 'production' ? '.jeececab.app' : undefined
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    secure: process.env.NODE_ENV === 'production'
   }
 };
 

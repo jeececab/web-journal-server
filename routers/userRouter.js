@@ -63,6 +63,7 @@ async function logoutUser(req, res) {
       res.status(400).send({ error: 'Failed to destroy session' });
     } else {
       res.clearCookie('mip');
+      console.log('yoooo');
       res.send();
     }
   });

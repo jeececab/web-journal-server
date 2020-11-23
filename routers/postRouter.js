@@ -52,7 +52,7 @@ async function fetchUserPosts(req, res) {
     if (!user) return res.status(404).send({ error: 'User not found' });
 
     const match = {};
-    const sort = { _id: req.query.sort === 'desc' ? -1 : 1 };
+    const sort = { date_title: req.query.sort === 'desc' ? -1 : 1 };
 
     const count = await Post.find({ user_id: req.userId }).countDocuments();
 
