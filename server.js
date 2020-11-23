@@ -22,7 +22,7 @@ store.on('error', error => {
 
 app.use(
   cors({
-    origin: process.env.ENV === 'production' ? 'https://web-journal.netlify.app' : 'http://localhost:3000',
+    origin: ['https://web-journal.netlify.app', 'https://shielded-hamlet-36885.herokuapp.com'],
     credentials: true
   })
 );
