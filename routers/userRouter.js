@@ -33,6 +33,9 @@ async function signupUser(req, res) {
 
 async function loginUser(req, res) {
   try {
+    res.header('Access-Control-Allow-Origin', req.headers.origin);
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
