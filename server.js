@@ -22,7 +22,7 @@ store.on('error', error => {
 
 app.use(
   cors({
-    origin: 'https://web-journal.netlify.app',
+    origin: ['https://web-journal.netlify.app', 'https://shielded-hamlet-36885.herokuapp.com'],
     credentials: true
   })
 );
@@ -37,8 +37,8 @@ const sessionConfig = {
     maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
     httpOnly: true,
     sameSite: 'lax',
-    secure: process.env.ENV === 'production',
-    domain: '.shielded-hamlet-36885.herokuapp.com'
+    secure: true,
+    domain: 'shielded-hamlet-36885.herokuapp.com'
   }
 };
 
