@@ -22,7 +22,7 @@ store.on('error', error => {
 
 app.use(
   cors({
-    origin: ['https://web-journal.netlify.app', 'https://shielded-hamlet-36885.herokuapp.com'],
+    origin: ['https://journal.jeececab.com', 'http://journal-api.jeececab.com'],
     credentials: true
   })
 );
@@ -38,8 +38,8 @@ const sessionConfig = {
     maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
     httpOnly: true,
     sameSite: 'lax',
-    secure: true,
-    domain: '.web-journal.netlify.app'
+    secure: false,
+    domain: '.journal.jeececab.app'
   }
 };
 
