@@ -22,7 +22,7 @@ app.set('trust proxy', 1);
 
 app.use(
   cors({
-    origin: process.env.ENV === 'production' ? 'https://web-journal.netlify.app' : 'http://localhost:3000',
+    origin: process.env.NODE_ENV === 'production' ? 'https://web-journal.netlify.app' : 'http://localhost:3000',
     credentials: true
   })
 );
@@ -37,8 +37,8 @@ app.use(
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
       httpOnly: true,
-      sameSite: 'lax',
-      secure: process.env.ENV === 'production'
+      sameSite: 'strict',
+      secure: process.env.NODE_ENV === 'production'
     }
   })
 );
