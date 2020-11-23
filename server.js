@@ -37,7 +37,7 @@ const sessionConfig = {
     path: '/',
     maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
     httpOnly: true,
-    sameSite: 'lax',
+    sameSite: 'none',
     secure: true,
     //domain: 'shielded-hamlet-36885.herokuapp.com'
   }
