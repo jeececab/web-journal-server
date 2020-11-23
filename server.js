@@ -35,7 +35,7 @@ const sessionConfig = {
   saveUninitialized: false,
   cookie: {
     maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
-    httpOnly: true,
+    httpOnly: false,
     sameSite: "lax",
     secure: process.env.ENV === 'production',
     domain: ".web-journal.netlify.app"
