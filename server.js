@@ -22,8 +22,9 @@ store.on('error', error => {
 
 app.use(
   cors({
-    origin: process.env.NODE_ENV === 'production' ? 'https://journal.jeececab.com' : 'http://localhost:3000',
-    credentials: true
+    origin: process.env.NODE_ENV === 'production' ? /\.jeececab.com$/ : 'http://localhost:3000',
+    credentials: true,
+    methods: ['GET', 'PUT', 'POST', 'PATCH']
   })
 );
 
@@ -37,8 +38,9 @@ const sessionConfig = {
     path: '/',
     maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
     httpOnly: true,
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-    secure: process.env.NODE_ENV === 'production'
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
+    domain: '.jeececab.com'
   }
 };
 
