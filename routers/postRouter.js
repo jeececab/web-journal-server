@@ -52,17 +52,23 @@ async function fetchUserPosts(req, res) {
     if (!user) return res.status(404).send({ error: 'User not found' });
 
     const match = {};
+    let limit = Number(req.query.limit);
+    const skip = Number(req.query.skip) > 0 ? Number(req.query.skip) * Number(req.query.limit) : 0;
     const sort = { date_title: req.query.sort === 'desc' ? -1 : 1 };
 
     const count = await Post.find({ user_id: req.userId }).countDocuments();
+
+    if (req.query.month) {
+      match.date_title = new RegExp(req.query.month, 'i');
+    }
 
     await user
       .populate({
         path: 'posts',
         match,
         options: {
-          limit: Number(req.query.limit),
-          skip: Number(req.query.skip) > 0 ? Number(req.query.skip) * Number(req.query.limit) : 0,
+          limit,
+          skip,
           sort
         }
       })
